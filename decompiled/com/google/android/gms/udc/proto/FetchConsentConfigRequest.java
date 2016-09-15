@@ -1,0 +1,301 @@
+package com.google.android.gms.udc.proto;
+
+import com.google.android.gms.lint.BuildConfig;
+import com.google.protobuf.nano.CodedInputByteBufferNano;
+import com.google.protobuf.nano.CodedOutputByteBufferNano;
+import com.google.protobuf.nano.ExtendableMessageNano;
+import com.google.protobuf.nano.InternalNano;
+import com.google.protobuf.nano.InvalidProtocolBufferNanoException;
+import com.google.protobuf.nano.MessageNano;
+import com.google.protobuf.nano.WireFormatNano;
+import com.google.wireless.android.play.playlog.proto.ClientAnalytics.LogRequest.LogSource;
+import com.google.wireless.android.play.playlog.proto.UserLocation.LaunchSettingsEvent.Action;
+import com.google.wireless.android.play.playlog.proto.UserLocation.LocationSharingEvent.Type;
+import com.google.wireless.android.play.playlog.proto.UserLocation.TimeSelection;
+import java.io.IOException;
+
+public final class FetchConsentConfigRequest extends ExtendableMessageNano<FetchConsentConfigRequest> {
+    private static volatile FetchConsentConfigRequest[] _emptyArray;
+    public ApiRequestHeader apiHeader;
+    public ClientManagedSettingState[] clientManagedSettingStates;
+    public int forNewValue;
+    public int[] settingIds;
+    public UserEnvironment userEnvironment;
+    public String userId;
+    public int viewType;
+
+    public interface ViewType {
+        public static final int FLOW = 1;
+        public static final int PROMPT = 2;
+        public static final int UNKNOWN = 0;
+    }
+
+    public static FetchConsentConfigRequest[] emptyArray() {
+        if (_emptyArray == null) {
+            synchronized (InternalNano.LAZY_INIT_LOCK) {
+                if (_emptyArray == null) {
+                    _emptyArray = new FetchConsentConfigRequest[0];
+                }
+            }
+        }
+        return _emptyArray;
+    }
+
+    public FetchConsentConfigRequest() {
+        clear();
+    }
+
+    public FetchConsentConfigRequest clear() {
+        this.apiHeader = null;
+        this.userId = BuildConfig.VERSION_NAME;
+        this.settingIds = WireFormatNano.EMPTY_INT_ARRAY;
+        this.forNewValue = 0;
+        this.viewType = 0;
+        this.userEnvironment = null;
+        this.clientManagedSettingStates = ClientManagedSettingState.emptyArray();
+        this.unknownFieldData = null;
+        this.cachedSize = -1;
+        return this;
+    }
+
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof FetchConsentConfigRequest)) {
+            return false;
+        }
+        FetchConsentConfigRequest other = (FetchConsentConfigRequest) o;
+        if (this.apiHeader == null) {
+            if (other.apiHeader != null) {
+                return false;
+            }
+        } else if (!this.apiHeader.equals(other.apiHeader)) {
+            return false;
+        }
+        if (this.userId == null) {
+            if (other.userId != null) {
+                return false;
+            }
+        } else if (!this.userId.equals(other.userId)) {
+            return false;
+        }
+        if (!InternalNano.equals(this.settingIds, other.settingIds) || this.forNewValue != other.forNewValue || this.viewType != other.viewType) {
+            return false;
+        }
+        if (this.userEnvironment == null) {
+            if (other.userEnvironment != null) {
+                return false;
+            }
+        } else if (!this.userEnvironment.equals(other.userEnvironment)) {
+            return false;
+        }
+        if (!InternalNano.equals(this.clientManagedSettingStates, other.clientManagedSettingStates)) {
+            return false;
+        }
+        if (this.unknownFieldData != null && !this.unknownFieldData.isEmpty()) {
+            return this.unknownFieldData.equals(other.unknownFieldData);
+        }
+        if (other.unknownFieldData == null || other.unknownFieldData.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public int hashCode() {
+        int i = 0;
+        int hashCode = (((((((((((((((getClass().getName().hashCode() + 527) * 31) + (this.apiHeader == null ? 0 : this.apiHeader.hashCode())) * 31) + (this.userId == null ? 0 : this.userId.hashCode())) * 31) + InternalNano.hashCode(this.settingIds)) * 31) + this.forNewValue) * 31) + this.viewType) * 31) + (this.userEnvironment == null ? 0 : this.userEnvironment.hashCode())) * 31) + InternalNano.hashCode(this.clientManagedSettingStates)) * 31;
+        if (!(this.unknownFieldData == null || this.unknownFieldData.isEmpty())) {
+            i = this.unknownFieldData.hashCode();
+        }
+        return hashCode + i;
+    }
+
+    public void writeTo(CodedOutputByteBufferNano output) throws IOException {
+        if (this.settingIds != null && this.settingIds.length > 0) {
+            for (int writeInt32 : this.settingIds) {
+                output.writeInt32(1, writeInt32);
+            }
+        }
+        if (this.forNewValue != 0) {
+            output.writeInt32(2, this.forNewValue);
+        }
+        if (this.viewType != 0) {
+            output.writeInt32(3, this.viewType);
+        }
+        if (this.userEnvironment != null) {
+            output.writeMessage(4, this.userEnvironment);
+        }
+        if (this.apiHeader != null) {
+            output.writeMessage(5, this.apiHeader);
+        }
+        if (!this.userId.equals(BuildConfig.VERSION_NAME)) {
+            output.writeString(6, this.userId);
+        }
+        if (this.clientManagedSettingStates != null && this.clientManagedSettingStates.length > 0) {
+            for (ClientManagedSettingState element : this.clientManagedSettingStates) {
+                if (element != null) {
+                    output.writeMessage(7, element);
+                }
+            }
+        }
+        super.writeTo(output);
+    }
+
+    protected int computeSerializedSize() {
+        int size = super.computeSerializedSize();
+        if (this.settingIds != null && this.settingIds.length > 0) {
+            int dataSize = 0;
+            for (int element : this.settingIds) {
+                dataSize += CodedOutputByteBufferNano.computeInt32SizeNoTag(element);
+            }
+            size = (size + dataSize) + (this.settingIds.length * 1);
+        }
+        if (this.forNewValue != 0) {
+            size += CodedOutputByteBufferNano.computeInt32Size(2, this.forNewValue);
+        }
+        if (this.viewType != 0) {
+            size += CodedOutputByteBufferNano.computeInt32Size(3, this.viewType);
+        }
+        if (this.userEnvironment != null) {
+            size += CodedOutputByteBufferNano.computeMessageSize(4, this.userEnvironment);
+        }
+        if (this.apiHeader != null) {
+            size += CodedOutputByteBufferNano.computeMessageSize(5, this.apiHeader);
+        }
+        if (!this.userId.equals(BuildConfig.VERSION_NAME)) {
+            size += CodedOutputByteBufferNano.computeStringSize(6, this.userId);
+        }
+        if (this.clientManagedSettingStates != null && this.clientManagedSettingStates.length > 0) {
+            for (ClientManagedSettingState element2 : this.clientManagedSettingStates) {
+                if (element2 != null) {
+                    size += CodedOutputByteBufferNano.computeMessageSize(7, element2);
+                }
+            }
+        }
+        return size;
+    }
+
+    public FetchConsentConfigRequest mergeFrom(CodedInputByteBufferNano input) throws IOException {
+        while (true) {
+            int tag = input.readTag();
+            int arrayLength;
+            int i;
+            int[] newArray;
+            int value;
+            switch (tag) {
+                case Action.UNKNOWN /*0*/:
+                    break;
+                case Type.TAP_GET_LINK /*8*/:
+                    arrayLength = WireFormatNano.getRepeatedFieldArrayLength(input, 8);
+                    i = this.settingIds == null ? 0 : this.settingIds.length;
+                    newArray = new int[(i + arrayLength)];
+                    if (i != 0) {
+                        System.arraycopy(this.settingIds, 0, newArray, 0, i);
+                    }
+                    while (i < newArray.length - 1) {
+                        newArray[i] = input.readInt32();
+                        input.readTag();
+                        i++;
+                    }
+                    newArray[i] = input.readInt32();
+                    this.settingIds = newArray;
+                    continue;
+                case Type.TAP_ABOUT /*10*/:
+                    int limit = input.pushLimit(input.readRawVarint32());
+                    arrayLength = 0;
+                    int startPos = input.getPosition();
+                    while (input.getBytesUntilLimit() > 0) {
+                        input.readInt32();
+                        arrayLength++;
+                    }
+                    input.rewindToPosition(startPos);
+                    i = this.settingIds == null ? 0 : this.settingIds.length;
+                    newArray = new int[(i + arrayLength)];
+                    if (i != 0) {
+                        System.arraycopy(this.settingIds, 0, newArray, 0, i);
+                    }
+                    while (i < newArray.length) {
+                        newArray[i] = input.readInt32();
+                        i++;
+                    }
+                    this.settingIds = newArray;
+                    input.popLimit(limit);
+                    continue;
+                case LogSource.GMS_CORE_PEOPLE /*16*/:
+                    value = input.readInt32();
+                    switch (value) {
+                        case Action.UNKNOWN /*0*/:
+                        case TimeSelection.Type.TEMPORARY /*1*/:
+                        case TimeSelection.Type.INDEFINITELY /*2*/:
+                        case TimeSelection.Type.CUSTOM /*3*/:
+                            this.forNewValue = value;
+                            break;
+                        default:
+                            continue;
+                    }
+                case LogSource.LB_C /*24*/:
+                    value = input.readInt32();
+                    switch (value) {
+                        case Action.UNKNOWN /*0*/:
+                        case TimeSelection.Type.TEMPORARY /*1*/:
+                        case TimeSelection.Type.INDEFINITELY /*2*/:
+                            this.viewType = value;
+                            break;
+                        default:
+                            continue;
+                    }
+                case LogSource.NOVA /*34*/:
+                    if (this.userEnvironment == null) {
+                        this.userEnvironment = new UserEnvironment();
+                    }
+                    input.readMessage(this.userEnvironment);
+                    continue;
+                case LogSource.PHOTOS /*42*/:
+                    if (this.apiHeader == null) {
+                        this.apiHeader = new ApiRequestHeader();
+                    }
+                    input.readMessage(this.apiHeader);
+                    continue;
+                case LogSource.HANGOUT_LOG_REQUEST /*50*/:
+                    this.userId = input.readString();
+                    continue;
+                case LogSource.SLIDES /*58*/:
+                    arrayLength = WireFormatNano.getRepeatedFieldArrayLength(input, 58);
+                    if (this.clientManagedSettingStates == null) {
+                        i = 0;
+                    } else {
+                        i = this.clientManagedSettingStates.length;
+                    }
+                    ClientManagedSettingState[] newArray2 = new ClientManagedSettingState[(i + arrayLength)];
+                    if (i != 0) {
+                        System.arraycopy(this.clientManagedSettingStates, 0, newArray2, 0, i);
+                    }
+                    while (i < newArray2.length - 1) {
+                        newArray2[i] = new ClientManagedSettingState();
+                        input.readMessage(newArray2[i]);
+                        input.readTag();
+                        i++;
+                    }
+                    newArray2[i] = new ClientManagedSettingState();
+                    input.readMessage(newArray2[i]);
+                    this.clientManagedSettingStates = newArray2;
+                    continue;
+                default:
+                    if (!storeUnknownField(input, tag)) {
+                        break;
+                    }
+                    continue;
+            }
+            return this;
+        }
+    }
+
+    public static FetchConsentConfigRequest parseFrom(byte[] data) throws InvalidProtocolBufferNanoException {
+        return (FetchConsentConfigRequest) MessageNano.mergeFrom(new FetchConsentConfigRequest(), data);
+    }
+
+    public static FetchConsentConfigRequest parseFrom(CodedInputByteBufferNano input) throws IOException {
+        return new FetchConsentConfigRequest().mergeFrom(input);
+    }
+}
